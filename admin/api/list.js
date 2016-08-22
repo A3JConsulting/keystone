@@ -29,6 +29,9 @@ exports = module.exports = function(req, res) {
 			var skip = limit * (page - 1);
 				
 			var filters = req.list.getSearchFilters(req.query.q);
+			console.log("filter: ", req.query.q);
+			console.log("list: ", req.query.list);
+			console.log("field: ", req.query.field);
 
 			var count = req.list.model.count(filters);
 			var query = req.list.model.find(filters)

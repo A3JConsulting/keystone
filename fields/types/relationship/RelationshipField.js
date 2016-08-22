@@ -124,6 +124,8 @@ module.exports = Field.create({
 	},
 
 	getOptions: function(input, callback) {
+		console.log("searching, input: ", input);
+
 		superagent
 			.get('/keystone/api/' + this.props.refList.path + '/autocomplete?' + this.buildOptionQuery(input))
 			.set('Accept', 'application/json')
@@ -131,6 +133,8 @@ module.exports = Field.create({
 				if (err) throw err;
 
 				var data = res.body;
+
+				console.log(data.items.length + "/" + data.total);
 
 				callback(null, {
 					options: data.items.map(function (item) {
