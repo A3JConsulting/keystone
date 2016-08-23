@@ -301,6 +301,15 @@ module.exports = Field.create({
 			});
 		};
 
+		// react-select currently doesn't handle undefined 'value'-prop very well
+		// componentWillReceiveProps -> cannot read property 'length' of undefined
+		// so we need to create it with value (default to '')
+		var value = '';
+		// Only set value to public_id if it's not a local file for upload and it's not marked for removal!
+		if (!this.hasLocal() && !this.state.removeExisting && this.props.value && this.props.value.public_id) {
+			value = this.props.value.public_id;
+		}
+
 		return (
 			<div className='image-select'>
 				<Select
@@ -309,6 +318,7 @@ module.exports = Field.create({
 					name={this.props.paths.select}
 					id={'field_' + this.props.paths.select}
 					asyncOptions={getOptions}
+					value={value}
 				/>
 			</div>
 		);
